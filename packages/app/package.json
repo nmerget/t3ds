@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@directus/sdk": "21.2.2",
-    "@tailwindcss/vite": "4.2.4",
     "@t3ds/directus": "workspace:*",
+    "@tailwindcss/vite": "4.2.2",
     "@tanstack/query-core": "5.99.2",
     "@tanstack/react-devtools": "0.10.2",
     "@tanstack/react-query": "5.99.2",
@@ -32,7 +32,7 @@
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "react-intlayer": "8.7.5",
-    "tailwindcss": "4.2.4",
+    "tailwindcss": "4.2.2",
     "workbox-window": "7.4.0",
     "zod": "4.3.6"
   },
