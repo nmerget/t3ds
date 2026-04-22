@@ -5,6 +5,8 @@ services:
       - dokploy-network
     ports:
       - 3000
+    environment:
+      DIRECTUS_URL: ${DIRECTUS_URL}
     labels:
       - 'traefik.http.middlewares.app-compress.compress=true'
     healthcheck:

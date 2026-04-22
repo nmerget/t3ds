@@ -12,8 +12,8 @@ import { IntlayerProvider, useLocale } from 'react-intlayer';
 import { HeadIcons, HeadLanguages, getMetaTags } from '@/utils/head';
 
 import appCss from '../index.css?url';
-import { useI18nHTMLAttributes } from '@/hooks/useI18nHTMLAttributes.tsx';
-import Header from '@/components/Header.tsx';
+import { useI18nHTMLAttributes } from '@/hooks/useI18nHTMLAttributes';
+import Header from '@/components/Header';
 
 export const Route = createRootRoute({
   head: ({ params }) => {
@@ -41,7 +41,10 @@ function RootComponent() {
   useI18nHTMLAttributes(); // add this line
 
   useEffect(() => {
-    // Register service worker only in the browser, not during SSR
+    // Register service worker only in the browser and not on redirect routes
+    if (typeof window === 'undefined') return;
+    if (window.location.pathname === '/') return;
+
     import('virtual:pwa-register').then(({ registerSW }) => {
       const updateSW = registerSW({
         onNeedRefresh() {

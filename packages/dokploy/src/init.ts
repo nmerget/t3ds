@@ -141,7 +141,10 @@ export const init = async () => {
       console.log(`App compose created: ${appComposeId}`);
     }
 
-    const appEnv = [`APP_IMAGE=${appImage}:${appTag}`].join('\n');
+    const appEnv = [
+      `APP_IMAGE=${appImage}:${appTag}`,
+      `DIRECTUS_URL=${directusUrl}`,
+    ].join('\n');
 
     console.log('Setting App compose file and environment...');
     await updateCompose(appComposeId, {

@@ -4,7 +4,8 @@ import {
   SchemaDefinition,
 } from './types';
 
-export const DIRECTUS_URL = process.env.DIRECTUS_URL || 'http://localhost:8055';
+export const getDirectusUrl = () =>
+  process.env.DIRECTUS_URL || 'http://localhost:8055';
 
 export const DIRECTUS_SESSION_TOKEN = 'directus_session_token';
 export const DIRECTUS_REFRESH_TOKEN = 'directus_refresh_token';

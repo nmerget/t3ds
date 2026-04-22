@@ -2,7 +2,7 @@ import { Card } from '@/components/daisyui';
 import { getIntlayer } from 'intlayer';
 import { useParams } from '@tanstack/react-router';
 
-interface User {
+export interface User {
   id: string;
   first_name: string;
   last_name: string;

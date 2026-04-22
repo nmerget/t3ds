@@ -1,8 +1,13 @@
 import { existsSync } from 'node:fs';
 import { loadEnvFile } from 'node:process';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-if (existsSync('../../.env')) {
-  loadEnvFile('../../.env');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const envPath = resolve(__dirname, '../../../.env');
+
+if (existsSync(envPath)) {
+  loadEnvFile(envPath);
 }
 
 import {
@@ -14,12 +19,7 @@ import {
   rest,
   staticToken,
 } from '@directus/sdk';
-import {
-  DIRECTUS_URL,
-  Schema,
-  schemaDefinition,
-  songDefinition,
-} from '../src/index';
+import { getDirectusUrl, Schema, schemaDefinition, songDefinition } from '../src';
 import { PartialDirectusField } from '../src/types';
 
 const accessToken = process.env.DIRECTUS_STATIC_TOKEN ?? null;
@@ -30,13 +30,14 @@ if (!accessToken) {
   );
 }
 
-console.log(`Connecting to Directus at ${DIRECTUS_URL}`);
-
-const client = createDirectus<Schema>(DIRECTUS_URL)
-  .with(staticToken(accessToken))
-  .with(rest());
-
 export const initializeCollections = async () => {
+  const url = getDirectusUrl();
+  console.log(`Connecting to Directus at ${url}`);
+
+  const client = createDirectus<Schema>(url)
+    .with(staticToken(accessToken))
+    .with(rest());
+
   try {
     const result = await client.request(readCollections());
     const existingCollections = new Set(

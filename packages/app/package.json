@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --open",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "start": "node .output/server/index.mjs",
     "lint": "eslint .",
     "generate:manifest-icons": "pwa-asset-generator public/app-icon.png public/icons --favicon"
