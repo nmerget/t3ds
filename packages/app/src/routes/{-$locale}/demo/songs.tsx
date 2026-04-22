@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { SongsPage } from '@/pages/demo/SongsPage';
-import { getPrivateSongs, getPublicSongs } from '@/data/demo/songs.ts';
+import { getPrivateSongs, getPublicSongs } from '@/data/demo/songs';
 
 export const Route = createFileRoute('/{-$locale}/demo/songs')({
   component: () => {

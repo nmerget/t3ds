@@ -1,5 +1,5 @@
 import { Button, Card } from '@/components/daisyui';
-import { LocalizedLink } from '@/components/LocalizedLink.tsx';
+import { LocalizedLink } from '@/components/LocalizedLink';
 import { getIntlayer } from 'intlayer';
 import { useParams } from '@tanstack/react-router';
 

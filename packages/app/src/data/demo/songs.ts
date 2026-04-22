@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import { readItems } from '@directus/sdk';
-import { client } from '@/utils/directus.ts';
+import { client } from '@/utils/directus';
 
 export const getPublicSongs = createServerFn({
   method: 'GET',

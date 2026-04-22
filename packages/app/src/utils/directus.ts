@@ -12,11 +12,11 @@ import {
   DIRECTUS_REFRESH_TOKEN,
   DIRECTUS_SESSION_TOKEN,
   DIRECTUS_TOKEN_EXPIRES_AT,
-  DIRECTUS_URL,
+  getDirectusUrl,
   Schema,
 } from '@t3ds/directus';
 
-export const client = createDirectus<Schema>(DIRECTUS_URL)
+export const client = createDirectus<Schema>(getDirectusUrl())
   .with(rest())
   .with(authentication('json'));
 
