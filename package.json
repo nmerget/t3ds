@@ -5,13 +5,14 @@
   "type": "module",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev": "pnpm --filter @t3ds/app dev",
     "build": "pnpm --filter @t3ds/app build",
-    "start": "pnpm --filter @t3ds/app start",
-    "test": "pnpm -r test",
-    "lint": "pnpm -r lint",
+    "dev": "pnpm --filter @t3ds/app dev",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "lint": "pnpm -r lint",
+    "setup": "node scripts/setup.ts",
+    "start": "pnpm --filter @t3ds/app start",
+    "test": "pnpm -r test"
   },
   "devDependencies": {
     "eslint": "10.2.0",

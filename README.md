@@ -18,6 +18,17 @@ This is a pnpm workspace monorepo containing:
 
 ## Getting Started
 
+After cloning the template, run the interactive setup to configure your project:
+
+```bash
+pnpm install
+pnpm setup
+```
+
+This will prompt you for your project name, namespace, description, and PWA settings, then update all configuration files.
+
+### Development
+
 To run the **frontend** local:
 
 ```bash
