@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { UserPage, User } from '@/pages/_authenticated/UserPage';
-import { client } from '@/utils/directus';
+import { getClient } from '@/utils/directus';
 import { readMe } from '@directus/sdk';
 
 export const Route = createFileRoute('/{-$locale}/_authenticated/user')({
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/{-$locale}/_authenticated/user')({
   },
   loader: async (): Promise<User | null> => {
     try {
-      return (await client.request(readMe())) as unknown as User;
+      return (await getClient().request(readMe())) as unknown as User;
     } catch (e) {
       console.log(e);
       return null;

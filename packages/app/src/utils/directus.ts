@@ -12,13 +12,25 @@ import {
   DIRECTUS_REFRESH_TOKEN,
   DIRECTUS_SESSION_TOKEN,
   DIRECTUS_TOKEN_EXPIRES_AT,
-  getDirectusUrl,
   Schema,
 } from '@t3ds/directus';
 
-export const client = createDirectus<Schema>(getDirectusUrl())
-  .with(rest())
-  .with(authentication('json'));
+let _cachedDirectusUrl: string | undefined;
+
+const getDirectusUrl = () => {
+  if (_cachedDirectusUrl) return _cachedDirectusUrl;
+  if (typeof window === 'undefined') {
+    const url = process.env.NITRO_DIRECTUS_URL || 'http://localhost:8055';
+    _cachedDirectusUrl = url;
+    return url;
+  }
+  return _cachedDirectusUrl || 'http://localhost:8055';
+};
+
+export const getClient = () =>
+  createDirectus<Schema>(getDirectusUrl())
+    .with(rest())
+    .with(authentication('json'));
 
 export const getCookieToken = createServerFn().handler(async () => {
   return getCookie(DIRECTUS_SESSION_TOKEN);
@@ -73,7 +85,7 @@ export const isAuthenticated = async (): Promise<boolean> => {
     if (tokenExpiringSoon) {
       const refresh_token = await getRefreshToken();
       if (refresh_token) {
-        const result = await client.request(
+        const result = await getClient().request(
           refresh({ mode: 'json', refresh_token }),
         );
         if (result.access_token) {
@@ -85,8 +97,9 @@ export const isAuthenticated = async (): Promise<boolean> => {
       }
     }
 
-    await client.setToken(token);
-    await client.request(readMe());
+    const c = getClient();
+    await c.setToken(token);
+    await c.request(readMe());
     return true;
   } catch (e) {
     console.error(e);
