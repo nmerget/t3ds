@@ -1,8 +1,7 @@
 import { getIntlayer } from 'intlayer';
-import { APP_URL } from './constants';
 import { THEME_COLOR, APP_NAME } from '../../../manifest';
 
-export const getMetaTags = (locale?: string) => {
+export const getMetaTags = (locale?: string, appUrl?: string) => {
   const metaContent = getIntlayer('app', locale);
 
   return [
@@ -33,7 +32,7 @@ export const getMetaTags = (locale?: string) => {
       property: 'og:description',
       content: metaContent.meta.description,
     },
-    { property: 'og:url', content: APP_URL },
+    { property: 'og:url', content: appUrl || 'http://localhost:3000' },
     {
       property: 'og:locale',
       content: locale || 'en',

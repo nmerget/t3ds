@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - 5000:3000
+    environment:
+      NITRO_DIRECTUS_URL: http://localhost:8055
+      NITRO_APP_URL: http://localhost:5000
+    networks:
+      - default

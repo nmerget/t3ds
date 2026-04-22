@@ -9,20 +9,25 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { IntlayerProvider, useLocale } from 'react-intlayer';
-import { HeadIcons, HeadLanguages, getMetaTags } from '@/utils/head';
+import { HeadIcons, getHeadLanguages, getMetaTags } from '@/utils/head';
+import { getAppUrl } from '@/utils/head/constants';
 
 import appCss from '../index.css?url';
 import { useI18nHTMLAttributes } from '@/hooks/useI18nHTMLAttributes';
 import Header from '@/components/Header';
 
 export const Route = createRootRoute({
-  head: ({ params }) => {
+  loader: () => ({
+    appUrl: getAppUrl(),
+  }),
+  head: ({ loaderData, params }) => {
     const { locale } = params as { locale?: string };
+    const appUrl = loaderData?.appUrl || 'http://localhost:3000';
 
     return {
-      meta: getMetaTags(locale),
+      meta: getMetaTags(locale, appUrl),
       links: [
-        ...HeadLanguages,
+        ...getHeadLanguages(appUrl),
         ...HeadIcons,
         { rel: 'stylesheet', href: appCss },
         {

@@ -14,10 +14,10 @@ export const Route = createFileRoute('/{-$locale}/login')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const { client } = await import('@/utils/directus');
+        const { getClient } = await import('@/utils/directus');
         const body = await request.json();
         const { email, password } = body;
-        const data = await client.login(
+        const data = await getClient().login(
           {
             email,
             password,
