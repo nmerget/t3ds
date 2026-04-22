@@ -18,15 +18,10 @@ const config = defineConfig(({ mode }) => {
     resolve: {
       tsconfigPaths: true,
     },
-    define: {
-      'import.meta.env.VITE_APP_URL': JSON.stringify(
-        env.APP_URL || 'http://localhost:3000',
-      ),
-    },
     plugins: [
       devtools(),
-      nitro(
-        process.env.NODE_ENV === 'production'
+      nitro({
+        ...(process.env.NODE_ENV === 'production'
           ? {
               publicAssets: [
                 {
@@ -36,14 +31,10 @@ const config = defineConfig(({ mode }) => {
                 },
               ],
             }
-          : {},
-      ),
-      tailwindcss(),
-      tanstackStart({
-        sitemap: {
-          host: env.APP_URL || 'http://localhost:3000',
-        },
+          : {}),
       }),
+      tailwindcss(),
+      tanstackStart({}),
       viteReact(),
       VitePWA({
         workbox: {

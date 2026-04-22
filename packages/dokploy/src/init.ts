@@ -144,6 +144,7 @@ export const init = async () => {
     const appEnv = [
       `APP_IMAGE=${appImage}:${appTag}`,
       `DIRECTUS_URL=${directusUrl}`,
+      `APP_URL=${appUrl}`,
     ].join('\n');
 
     console.log('Setting App compose file and environment...');
