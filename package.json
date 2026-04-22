@@ -3,6 +3,7 @@
   "description": "TanStack Dokploy Directus DaisyUI Starter - A modern full-stack monorepo with TanStack Router, Query, Directus CMS, and DaisyUI components",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "pnpm --filter @t3ds/app dev",
     "build": "pnpm --filter @t3ds/app build",
