@@ -11,7 +11,7 @@ export const Route = createFileRoute('/{-$locale}/_authenticated/user')({
   },
   loader: async (): Promise<User | null> => {
     try {
-      return await client.request(readMe()) as unknown as User;
+      return (await client.request(readMe())) as unknown as User;
     } catch (e) {
       console.log(e);
       return null;

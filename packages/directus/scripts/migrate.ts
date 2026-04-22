@@ -19,7 +19,12 @@ import {
   rest,
   staticToken,
 } from '@directus/sdk';
-import { getDirectusUrl, Schema, schemaDefinition, songDefinition } from '../src';
+import {
+  getDirectusUrl,
+  Schema,
+  schemaDefinition,
+  songDefinition,
+} from '../src';
 import { PartialDirectusField } from '../src/types';
 
 const accessToken = process.env.DIRECTUS_STATIC_TOKEN ?? null;
