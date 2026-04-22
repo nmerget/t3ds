@@ -1,0 +1,21 @@
+services:
+  app:
+    image: ${APP_IMAGE}
+    networks:
+      - dokploy-network
+    ports:
+      - 3000
+    labels:
+      - 'traefik.http.middlewares.app-compress.compress=true'
+    healthcheck:
+      test:
+        ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+
+networks:
+  dokploy-network:
+    external: true

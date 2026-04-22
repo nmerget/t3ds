@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["**/*.ts", "**/*.tsx"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@t3ds/directus": ["../directus/src/index.ts"],
+      "@t3ds/directus/*": ["../directus/src/*"],
+      "@t3ds/content/*": ["../content/src/*"]
+    }
+  }
+}

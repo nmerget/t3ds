@@ -1,0 +1,104 @@
+# T3DS - TanStack Dokploy Directus DaisyUI Starter
+
+> A pnpm workspace monorepo with TanStack Router, Query, Directus CMS, and DaisyUI components
+
+## Project Structure
+
+- packages/app: Main TanStack React application (Vite, React 19, TanStack Router & Query, Tailwind CSS, DaisyUI)
+- packages/directus: Directus SDK configuration and types (Node.js package)
+- packages/dokploy: Dokploy deployment configuration
+
+## Core Rules
+
+- Always use TypeScript (never JavaScript)
+- Use pnpm exclusively for package management
+- Single quotes, semicolons, 2-space indentation, Unix line endings
+- Strict type checking, avoid `any` types
+- Follow ESLint and Prettier configurations
+
+## Module System
+
+- packages/directus (Node.js): Use .js extensions in relative imports due to moduleResolution: "NodeNext"
+- packages/app (Vite): No extensions in imports
+- Workspace imports: @t3ds/directus
+- App path aliases: @/* for packages/app/src/*
+
+## Commands
+
+- pnpm install: Install all dependencies
+- pnpm dev: Run development server (port 3000)
+- pnpm build: Build for production
+- pnpm lint: Lint all packages
+- pnpm check: Format and fix linting issues
+- pnpm test: Run tests
+- pnpm --filter @t3ds/app <cmd>: Run app-specific command
+- pnpm --filter @t3ds/directus init: Initialize Directus collections
+
+## Stack
+
+- React 19
+- TanStack Router (file-based routing in packages/app/src/routes)
+- TanStack Query for data fetching
+- Tailwind CSS 4 (only in packages/app)
+- DaisyUI 5 for UI components
+- Vitest for testing
+- TypeScript 5.9.3
+- Directus SDK 21.2.2
+- Intlayer 8.7.0 (internationalization)
+
+## Documentation
+
+- README.md: Getting started and main documentation
+- docs/directus/README.md: Directus setup and configuration
+- docs/dokploy_directus/dokploy_directus.md: Production deployment guide
+- .github/AGENT_GUIDELINES.md: Comprehensive AI agent guidelines
+
+## File Structure
+
+- packages/app/src/routes/: File-based routing (use __root.tsx for layout, _authenticated.tsx for protected routes)
+- packages/app/src/components/: Reusable React components
+- packages/app/src/components/daisyui/: DaisyUI component wrappers (Button, Input, Card, Navigation)
+- packages/app/src/pages/: Page components
+- packages/app/src/contents/: Intlayer content files for translations
+- packages/app/src/hooks/: Custom React hooks (useCookie)
+- packages/app/src/utils/: Utility functions
+- packages/directus/src/index.ts: Directus collections and configuration
+- packages/directus/src/types.ts: TypeScript type definitions
+- packages/directus/src/init.ts: Database migration script
+- packages/directus/src/.env.local: Environment configuration (tracked in git)
+
+## Environment Variables
+
+- DIRECTUS_STATIC_TOKEN: Required for database migrations (in packages/directus/src/.env.local)
+- Note: .env.local is tracked in git for the directus package (exception to typical patterns)
+
+## DaisyUI Components
+
+- Button: Supports variant (primary, secondary, accent, neutral), size, wide, block props
+- Input: Supports label prop for integrated label/input component
+- Card: Supports title, actions, size props
+- Navigation: Navbar component with brand and menu items
+
+## Internationalization
+
+- Use getIntlayer with locale parameter from useParams for translations
+- Content files in packages/app/src/contents/ (app.content.ts, landing.content.ts, user.content.ts, index.content.ts)
+- Supports English (en) and German (de)
+
+## Landing Page Flow
+
+- First-time visitors are redirected to /landing page
+- Landing cookie is set after visiting landing page (expires in 1 year)
+- Returning visitors go directly to home page
+- Cookie management via useCookie hook
+
+## Best Practices
+
+- Keep business logic separate from UI components
+- Leverage TypeScript's type system fully
+- Extract common logic into utilities or hooks
+- Use React.memo, useMemo, useCallback appropriately
+- Ensure UI components are accessible (ARIA labels, keyboard navigation)
+- Handle errors gracefully with try-catch or error boundaries
+- Add JSDoc comments for complex functions and types
+- Use DaisyUI semantic color names (base-*, primary, secondary, etc.) instead of Tailwind color classes

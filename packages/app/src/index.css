@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+@layer components {
+  .shell {
+    @apply grid h-screen overflow-hidden;
+    grid-template-areas: 'main' 'header';
+    grid-template-rows: 1fr min-content;
+
+    @supports (height: 100dvh) {
+      block-size: 100dvh;
+    }
+
+    @media screen and (width >= 1024px) {
+      grid-template-areas: 'header' 'main';
+      grid-template-rows: min-content 1fr;
+    }
+  }
+
+  .main {
+    @apply mx-auto overflow-y-auto gap-4 py-4 w-full;
+    grid-area: main;
+    block-size: 100%;
+    padding-inline: max(0.5rem, calc(1rem + (100vw - 80rem) / 2));
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  @layer dasyui {
+    .menu {
+      [aria-current='page'] {
+        @apply outline-none;
+        color: var(--menu-active-fg);
+        background-color: var(--menu-active-bg);
+        background-size: auto, calc(var(--noise) * 100%);
+        background-image: none, var(--fx-noise);
+        &:not(&:active) {
+          box-shadow: 0 2px calc(var(--depth) * 3px) -2px var(--menu-active-bg);
+        }
+      }
+    }
+  }
+}
+
+@view-transition {
+  navigation: auto;
+}

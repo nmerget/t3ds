@@ -1,0 +1,26 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+count.txt
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+todos.json
+/.idea/
+
+.env
+!.env.local
+
+/packages/app/.intlayer/
+
+# local folder
+!local/.env
+local/data
+local/uploads
+local/extensions/
+/.mcpg/
+/packages/app/src/routeTree.gen.ts

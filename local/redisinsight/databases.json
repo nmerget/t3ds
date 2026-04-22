@@ -1,0 +1,8 @@
+[
+  {
+    "host": "cache",
+    "port": 6379,
+    "name": "Directus Cache",
+    "db": 0
+  }
+]

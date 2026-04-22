@@ -1,0 +1,22 @@
+{
+  "name": "t3ds",
+  "description": "TanStack Dokploy Directus DaisyUI Starter - A modern full-stack monorepo with TanStack Router, Query, Directus CMS, and DaisyUI components",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm --filter @t3ds/app dev",
+    "build": "pnpm --filter @t3ds/app build",
+    "start": "pnpm --filter @t3ds/app start",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "eslint": "10.2.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-prettier": "5.5.5",
+    "mcp-general": "^1.1.0",
+    "prettier": "3.8.2"
+  }
+}

@@ -1,0 +1,76 @@
+services:
+  database:
+    image: postgis/postgis:18-3.6
+    networks:
+      - dokploy-network
+    volumes:
+      - directus_database:/var/lib/postgresql
+
+    environment:
+      POSTGRES_USER: 'directus'
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: 'directus'
+    healthcheck:
+      test: ['CMD', 'pg_isready', '--host=localhost', '--username=directus']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+
+  cache:
+    image: redis:8
+    networks:
+      - dokploy-network
+    healthcheck:
+      test: ['CMD-SHELL', "[ $$(redis-cli ping) = 'PONG' ]"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_interval: 5s
+      start_period: 30s
+
+  directus:
+    image: directus/directus:11.17.3
+    networks:
+      - dokploy-network
+    ports:
+      - 8055
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    environment:
+      SECRET: ${DIRECTUS_SECRET}
+
+      DB_CLIENT: 'pg'
+      DB_HOST: 'database'
+      DB_PORT: '5432'
+      DB_DATABASE: 'directus'
+      DB_USER: 'directus'
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+
+      CACHE_ENABLED: 'true'
+      CACHE_AUTO_PURGE: 'true'
+      CACHE_STORE: 'redis'
+      REDIS: 'redis://cache:6379'
+
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: ${APP_URL}
+      CORS_METHODS: 'GET,POST,PATCH,DELETE,OPTIONS'
+
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+volumes:
+  directus_uploads:
+  directus_extensions:
+  directus_database:
+
+networks:
+  dokploy-network:
+    external: true

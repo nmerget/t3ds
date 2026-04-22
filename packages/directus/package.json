@@ -1,0 +1,31 @@
+{
+  "name": "@t3ds/directus",
+  "description": "Directus SDK configuration and TypeScript types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "@directus/sdk": "21.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "@typescript-eslint/eslint-plugin": "8.58.2",
+    "@typescript-eslint/parser": "8.58.2",
+    "eslint": "10.2.0",
+    "tsx": "4.21.0",
+    "typescript": "6.0.2",
+    "vitest": "4.1.4"
+  },
+  "scripts": {
+    "init": "tsx scripts/migrate.ts",
+    "test": "vitest run",
+    "lint": "eslint ."
+  }
+}
