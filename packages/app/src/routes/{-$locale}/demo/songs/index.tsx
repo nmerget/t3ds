@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { SongsPage } from '@/pages/demo/SongsPage';
-import { getPrivateSongs, getPublicSongs } from '@/data/demo/songs';
+import { SongsPage } from './songs.page';
+import { getPrivateSongs, getPublicSongs } from './songs.data';
 
-export const Route = createFileRoute('/{-$locale}/demo/songs')({
+export const Route = createFileRoute('/{-$locale}/demo/songs/')({
   component: () => {
     const songs = Route.useLoaderData();
     return <SongsPage songs={songs} />;

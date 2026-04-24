@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useLocale } from 'react-intlayer';
-import { useCookie } from '@/hooks/useCookie';
+import { getCookie } from '@/utils/cookie';
 
-function Redirect() {
+function RedirectPage() {
   const { defaultLocale } = useLocale();
   const navigate = useNavigate();
-  const { getCookie } = useCookie();
 
   useEffect(() => {
     const languageCookie = getCookie('language');
@@ -22,9 +21,9 @@ function Redirect() {
       : `/${language}/landing`;
 
     void navigate({ to: destination });
-  }, [navigate, defaultLocale, getCookie]);
+  }, [navigate, defaultLocale]);
 
   return null;
 }
 
-export default Redirect;
+export default RedirectPage;

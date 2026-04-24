@@ -22,6 +22,12 @@
 - packages/app (Vite): No extensions in imports
 - Workspace imports: @t3ds/directus
 - App path aliases: @/* for packages/app/src/*
+- IMPORTANT: Always use static imports for @/utils/directus in server handlers - dynamic imports prevent NITRO_DIRECTUS_URL from being read correctly
+- IMPORTANT: Never use top-level static imports from @tanstack/react-start/server in files reachable from the client route tree. Use dynamic `import('@tanstack/react-start/server')` inside createServerFn handlers instead. TanStack Start's import-protection plugin blocks both direct server imports and *.server.* file patterns from client code.
+- For authenticated Directus requests in server functions, use `directusRequest(command, true)` from @/utils/directus
+  - Example: `const user = await directusRequest(readMe(), true)`
+  - Returns `null` if no token is available
+  - For public collections, use `directusRequest(command)` (auth defaults to false)
 
 ## Commands
 
@@ -55,13 +61,15 @@
 
 ## File Structure
 
-- packages/app/src/routes/: File-based routing (use __root.tsx for layout, _authenticated.tsx for protected routes)
+- packages/app/src/routes/: File-based routing with co-located components and data
+  - Each route is a folder with index.tsx (route definition), [feature].page.tsx (UI component), and [feature].data.ts (server functions)
+  - Route folders: login/, landing/, demo/songs/, _authenticated/user/
 - packages/app/src/components/: Reusable React components
 - packages/app/src/components/daisyui/: DaisyUI component wrappers (Button, Input, Card, Navigation)
-- packages/app/src/pages/: Page components
 - packages/app/src/contents/: Intlayer content files for translations
-- packages/app/src/hooks/: Custom React hooks (useCookie)
-- packages/app/src/utils/: Utility functions
+- packages/app/src/hooks/: Custom React hooks
+- packages/app/src/utils/: Utility functions (cookie, directus, head)
+  - directus.ts: Directus client (getClient), server functions for auth (isAuthenticated, getCookieToken, setCookieToken) using dynamic server imports
 - packages/directus/src/index.ts: Directus collections and configuration
 - packages/directus/src/types.ts: TypeScript type definitions
 - packages/directus/src/init.ts: Database migration script
@@ -92,8 +100,26 @@
 - Returning visitors go directly to home page
 - Cookie management via useCookie hook
 
+## Authentication
+
+- Authentication uses Directus SDK with httpOnly cookie-based token storage
+- Login: POST handler in login/index.tsx calls Directus login, stores tokens via setCookieToken
+- Route protection: _authenticated.tsx layout route uses beforeLoad + isAuthenticated server function
+- isAuthenticated checks session cookie, refreshes token if expiring soon, validates with readMe()
+- Token storage: three httpOnly cookies (session token, refresh token, expiry timestamp)
+- For authenticated API calls in server functions: use `directusRequest(command, auth)` pattern
+  - Example: `const user = await directusRequest(readMe(), true)`
+  - Example: `const items = (await directusRequest(readItems('private', {}), true)) ?? []`
+  - Example public: `const songs = (await directusRequest(readItems('songs', {}))) ?? []`
+  - Returns `null` if no session token available (auth=true) 
+- Public collections (e.g. songs) use `getClient()` without token
+- Private collections require withToken — ensure Directus role has read access
+
 ## Best Practices
 
+- Use feature-based file structure: each route is a self-contained folder
+- Route folders contain: index.tsx (route definition), [feature].page.tsx (UI component), [feature].data.ts (server functions)
+- Files with .page.tsx, .data.ts, or .types.ts extensions are automatically excluded from route generation
 - Keep business logic separate from UI components
 - Leverage TypeScript's type system fully
 - Extract common logic into utilities or hooks

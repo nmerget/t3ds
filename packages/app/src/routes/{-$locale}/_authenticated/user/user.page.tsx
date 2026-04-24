@@ -1,23 +1,7 @@
 import { Card } from '@/components/daisyui';
 import { getIntlayer } from 'intlayer';
 import { useParams } from '@tanstack/react-router';
-
-export interface User {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  location: string | null;
-  title: string | null;
-  description: string | null;
-  avatar: string | null;
-  language: string | null;
-  status: string;
-  role: string;
-  last_access: string;
-  provider: string;
-  email_notifications: boolean;
-}
+import { User } from './user.data';
 
 export function UserPage({ user }: { user: User }) {
   const { locale } = useParams({ strict: false });

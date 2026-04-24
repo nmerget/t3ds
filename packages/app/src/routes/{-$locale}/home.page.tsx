@@ -1,7 +1,7 @@
 import { getIntlayer } from 'intlayer';
 import { useParams } from '@tanstack/react-router';
 
-export function IndexPage() {
+export function HomePage() {
   const { locale } = useParams({ strict: false });
   const { title, welcome } = getIntlayer('index', locale);
 
