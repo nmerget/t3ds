@@ -3,8 +3,8 @@ import config from '../../../intlayer.config';
 const locales = config.internationalization?.locales || ['en'];
 const LANGUAGES = locales.map((locale) => String(locale));
 
-export const getHeadLanguages = (appUrl: string) => [
-  { rel: 'canonical', href: appUrl },
+export const getHeadLanguages = (appUrl: string, pathname?: string) => [
+  { rel: 'canonical', href: pathname ? `${appUrl}${pathname}` : appUrl },
   ...LANGUAGES.map((lang) => ({
     rel: 'alternate',
     hrefLang: lang,

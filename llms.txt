@@ -14,6 +14,7 @@
 - Use pnpm exclusively for package management
 - Single quotes, semicolons, 2-space indentation, Unix line endings
 - Strict type checking, avoid `any` types
+- Avoid magic numbers: use named constants for numeric literals
 - Follow ESLint and Prettier configurations
 
 ## Module System
