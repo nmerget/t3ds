@@ -49,7 +49,7 @@ export function UserPage({ user }: { user: User }) {
           </div>
           <div>
             <p className="text-sm text-base-content/70">{lastAccess}</p>
-            <p className="font-medium">
+            <p className="font-medium" suppressHydrationWarning>
               {new Date(user.last_access).toLocaleString()}
             </p>
           </div>

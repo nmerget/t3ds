@@ -20,14 +20,15 @@ export const Route = createRootRoute({
   loader: () => ({
     appUrl: getAppUrl(),
   }),
-  head: ({ loaderData, params }) => {
+  head: ({ loaderData, params, matches }) => {
     const { locale } = params as { locale?: string };
     const appUrl = loaderData?.appUrl || 'http://localhost:3000';
+    const pathname = matches[matches.length - 1]?.pathname;
 
     return {
       meta: getMetaTags(locale, appUrl),
       links: [
-        ...getHeadLanguages(appUrl),
+        ...getHeadLanguages(appUrl, pathname),
         ...HeadIcons,
         { rel: 'stylesheet', href: appCss },
         {
@@ -75,7 +76,8 @@ function RootComponent() {
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const matches = useMatches();
   const hideShell = matches.some(
-    (match) => match.routeId === '/{-$locale}/landing' || match.routeId === '/',
+    (match) =>
+      match.routeId === '/{-$locale}/landing/' || match.routeId === '/',
   );
 
   return (

@@ -88,8 +88,10 @@ export const isAuthenticated = createServerFn({ method: 'GET' }).handler(
       if (!token) return false;
 
       const expiresAt = getCookie(DIRECTUS_TOKEN_EXPIRES_AT);
+      const FIVE_MINUTES_MS = 5 * 60 * 1000;
       const isExpiringSoon =
-        expiresAt && new Date(expiresAt).getTime() - Date.now() < 5 * 60 * 1000;
+        expiresAt &&
+        new Date(expiresAt).getTime() - Date.now() < FIVE_MINUTES_MS;
 
       if (isExpiringSoon) {
         const refresh_token = getCookie(DIRECTUS_REFRESH_TOKEN);
