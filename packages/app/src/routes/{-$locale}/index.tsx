@@ -1,10 +1,10 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-import { IndexPage } from '@/pages/IndexPage';
-import { useCookie } from '@/hooks/useCookie';
+
+import { hasCookie } from '@/utils/cookie';
+import { HomePage } from './home.page';
 
 export const Route = createFileRoute('/{-$locale}/')({
   beforeLoad: ({ params }) => {
-    const { hasCookie } = useCookie();
     if (!hasCookie('landing_visited')) {
       throw redirect({
         to: '/{-$locale}/landing',
@@ -12,5 +12,5 @@ export const Route = createFileRoute('/{-$locale}/')({
       });
     }
   },
-  component: IndexPage,
+  component: HomePage,
 });

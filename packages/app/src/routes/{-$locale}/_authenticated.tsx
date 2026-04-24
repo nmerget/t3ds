@@ -3,7 +3,11 @@ import { isAuthenticated } from '@/utils/directus';
 
 export const Route = createFileRoute('/{-$locale}/_authenticated')({
   beforeLoad: async ({ location, params }) => {
-    if (!(await isAuthenticated())) {
+    if (location.pathname.includes('.well-known')) return;
+
+    const authResult = await isAuthenticated();
+
+    if (!authResult) {
       throw redirect({
         to: '/{-$locale}/login',
         params: { locale: params.locale },

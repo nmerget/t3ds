@@ -21,21 +21,21 @@ export function LoginPage({
     setLoading(true);
 
     try {
-      fetch(path, {
+      const response = await fetch(path, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            void navigate({ to: redirect });
-          } else {
-            setError('Login failed. Please check your credentials.');
-          }
-        });
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        await navigate({ to: redirect });
+      } else {
+        setError('Login failed. Please check your credentials.');
+      }
     } catch (err) {
       setError('Login failed. Please check your credentials.');
       console.error(err);
@@ -53,6 +53,7 @@ export function LoginPage({
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
           required
         />
         <Input
@@ -61,6 +62,7 @@ export function LoginPage({
           label="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
           required
         />
         {error && <p className="text-sm text-error">{error}</p>}

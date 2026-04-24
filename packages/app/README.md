@@ -13,22 +13,45 @@ Example application demonstrating authentication with email/password and data fe
 
 ```
 src/
-├── components/      # Frontend components (Header, DaisyUI wrappers)
+├── components/      # Reusable UI components (Header, DaisyUI wrappers)
 ├── contents/        # Intlayer translation files
-├── data/            # Server functions to fetch data
 ├── hooks/           # Reusable React hooks
-├── pages/           # Frontend pages (mirrors routes structure)
-├── routes/          # File-based routes for TanStack Start
+├── routes/          # Feature-based file structure with co-located components
+│   ├── {-$locale}/
+│   │   ├── _authenticated/
+│   │   │   ├── index.tsx              # Layout route definition
+│   │   │   └── user/
+│   │   │       ├── index.tsx          # Route definition
+│   │   │       ├── user.page.tsx      # UI component
+│   │   │       └── user.data.ts       # Server functions & types
+│   │   ├── demo/
+│   │   │   └── songs/
+│   │   │       ├── index.tsx          # Route definition
+│   │   │       ├── songs.page.tsx     # UI component
+│   │   │       └── songs.data.ts      # Server functions & types
+│   │   ├── login/
+│   │   │   ├── index.tsx              # Route definition
+│   │   │   └── login.page.tsx         # UI component
+│   │   ├── landing/
+│   │   │   ├── index.tsx              # Route definition
+│   │   │   └── landing.page.tsx       # UI component
+│   │   └── index.tsx                  # Root route definition
 └── utils/           # Utility functions
 ```
 
-| Directory     | Description                                                   |
-| ------------- | ------------------------------------------------------------- |
-| `components/` | Reusable UI components (DaisyUI wrappers, Header, etc.)       |
-| `data/`       | Server functions for fetching data from Directus              |
-| `hooks/`      | Reusable React hooks (e.g. `useCookie`)                       |
-| `pages/`      | Page components that reflect the `routes/` structure          |
-| `routes/`     | File-based routing for TanStack Start (defines URL structure) |
+| Directory     | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `components/` | Reusable UI components (DaisyUI wrappers, Header, etc.)   |
+| `routes/`     | Feature-based routing with co-located components and data |
+| `hooks/`      | Reusable React hooks (e.g. `useCookie`)                   |
+| `utils/`      | Utility functions and configurations                      |
+
+**File Conventions:**
+
+- `index.tsx` files: TanStack Router definitions, handle routing and data loading
+- `[feature].page.tsx` files: UI components that focus purely on rendering
+- `[feature].data.ts` files: Server functions, type definitions, and business logic
+- Files with `.page.tsx`, `.data.ts`, or `.types.ts` extensions are automatically excluded from route generation
 
 ## Customization
 

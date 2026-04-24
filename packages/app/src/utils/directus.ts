@@ -1,13 +1,14 @@
 import {
   authentication,
-  AuthenticationData,
+  type AuthenticationData,
   createDirectus,
   readMe,
   refresh,
   rest,
+  type RestCommand,
+  withToken,
 } from '@directus/sdk';
 import { createServerFn } from '@tanstack/react-start';
-import { getCookie, setCookie } from '@tanstack/react-start/server';
 import {
   DIRECTUS_REFRESH_TOKEN,
   DIRECTUS_SESSION_TOKEN,
@@ -32,12 +33,26 @@ export const getClient = () =>
     .with(rest())
     .with(authentication('json'));
 
+const serverCookies = () =>
+  import('@tanstack/react-start/server').then((m) => ({
+    getCookie: m.getCookie,
+    setCookie: m.setCookie,
+  }));
+
 export const getCookieToken = createServerFn().handler(async () => {
+  const { getCookie } = await serverCookies();
   return getCookie(DIRECTUS_SESSION_TOKEN);
 });
-export const getRefreshToken = createServerFn().handler(async () => {
-  return getCookie(DIRECTUS_REFRESH_TOKEN);
-});
+
+export const directusRequest = async <Output extends object>(
+  command: RestCommand<Output, Schema>,
+  auth = false,
+): Promise<Output | null> => {
+  if (!auth) return await getClient().request(command);
+  const token = await getCookieToken();
+  if (!token) return null;
+  return await getClient().request(withToken(token, command));
+};
 
 export const setCookieToken = createServerFn()
   .inputValidator((data: AuthenticationData) => data)
@@ -45,6 +60,7 @@ export const setCookieToken = createServerFn()
     const { access_token, expires, refresh_token } = data;
     if (!access_token || !expires || !refresh_token) return;
 
+    const { setCookie } = await serverCookies();
     const now = Date.now();
     const expires_at = new Date(now + expires).toISOString();
 
@@ -56,53 +72,43 @@ export const setCookieToken = createServerFn()
 
     Object.entries(cookies).forEach(([key, value]) => {
       setCookie(key, value, {
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-        sameSite: 'lax', // CSRF protection
-        httpOnly: true, // XSS protection
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        httpOnly: true,
         expires: new Date(expires_at),
       });
     });
   });
 
-export const isTokenExpiringSoon = createServerFn().handler(async () => {
-  const expiresAt = getCookie(DIRECTUS_TOKEN_EXPIRES_AT);
-  if (!expiresAt) return false;
+export const isAuthenticated = createServerFn({ method: 'GET' }).handler(
+  async (): Promise<boolean> => {
+    const { getCookie } = await serverCookies();
+    try {
+      const token = getCookie(DIRECTUS_SESSION_TOKEN);
+      if (!token) return false;
 
-  const expiryTime = new Date(expiresAt).getTime();
-  const currentTime = Date.now();
-  const fiveMinutes = 5 * 60 * 1000;
+      const expiresAt = getCookie(DIRECTUS_TOKEN_EXPIRES_AT);
+      const isExpiringSoon =
+        expiresAt && new Date(expiresAt).getTime() - Date.now() < 5 * 60 * 1000;
 
-  return expiryTime - currentTime < fiveMinutes;
-});
-
-export const isAuthenticated = async (): Promise<boolean> => {
-  try {
-    let token = await getCookieToken();
-    if (!token) return false;
-
-    const tokenExpiringSoon = await isTokenExpiringSoon();
-
-    if (tokenExpiringSoon) {
-      const refresh_token = await getRefreshToken();
-      if (refresh_token) {
-        const result = await getClient().request(
-          refresh({ mode: 'json', refresh_token }),
-        );
-        if (result.access_token) {
-          await setCookieToken({ data: result });
-          token = result.access_token;
-        } else {
-          console.log('Token refresh failed', result);
+      if (isExpiringSoon) {
+        const refresh_token = getCookie(DIRECTUS_REFRESH_TOKEN);
+        if (refresh_token) {
+          const result = await getClient().request(
+            refresh({ mode: 'json', refresh_token }),
+          );
+          if (result.access_token) {
+            await setCookieToken({ data: result });
+          }
         }
       }
-    }
 
-    const c = getClient();
-    await c.setToken(token);
-    await c.request(readMe());
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
-};
+      const currentToken = getCookie(DIRECTUS_SESSION_TOKEN);
+      if (!currentToken) return false;
+      await getClient().request(withToken(currentToken, readMe()));
+      return true;
+    } catch {
+      return false;
+    }
+  },
+);
