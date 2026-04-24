@@ -1,11 +1,16 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
-
-import { hasCookie } from '@/utils/cookie';
+import { createServerFn } from '@tanstack/react-start';
+import { LANDING_VISITED_COOKIE, serverCookies } from '@/utils/cookie';
 import { HomePage } from './home.page';
 
+const hasLandingCookie = createServerFn({ method: 'GET' }).handler(async () => {
+  const { getCookie } = await serverCookies();
+  return !!getCookie(LANDING_VISITED_COOKIE);
+});
+
 export const Route = createFileRoute('/{-$locale}/')({
-  beforeLoad: ({ params }) => {
-    if (!hasCookie('landing_visited')) {
+  beforeLoad: async ({ params }) => {
+    if (!(await hasLandingCookie())) {
       throw redirect({
         to: '/{-$locale}/landing',
         params: { locale: params.locale || 'en' },

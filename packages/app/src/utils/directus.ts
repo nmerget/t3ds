@@ -16,6 +16,8 @@ import {
   Schema,
 } from '@t3ds/directus';
 
+import { serverCookies } from '@/utils/cookie';
+
 let _cachedDirectusUrl: string | undefined;
 
 const getDirectusUrl = () => {
@@ -32,12 +34,6 @@ export const getClient = () =>
   createDirectus<Schema>(getDirectusUrl())
     .with(rest())
     .with(authentication('json'));
-
-const serverCookies = () =>
-  import('@tanstack/react-start/server').then((m) => ({
-    getCookie: m.getCookie,
-    setCookie: m.setCookie,
-  }));
 
 export const getCookieToken = createServerFn().handler(async () => {
   const { getCookie } = await serverCookies();

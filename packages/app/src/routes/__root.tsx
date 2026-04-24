@@ -47,9 +47,7 @@ function RootComponent() {
   useI18nHTMLAttributes(); // add this line
 
   useEffect(() => {
-    // Register service worker only in the browser and not on redirect routes
     if (typeof window === 'undefined') return;
-    if (window.location.pathname === '/') return;
 
     import('virtual:pwa-register').then(({ registerSW }) => {
       const updateSW = registerSW({
