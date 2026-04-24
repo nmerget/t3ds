@@ -15,6 +15,7 @@
 - Single quotes, semicolons, 2-space indentation, Unix line endings
 - Strict type checking, avoid `any` types
 - Avoid magic numbers: use named constants for numeric literals
+- Define cookie names as exported constants in utils/cookie.ts (e.g. LANDING_VISITED_COOKIE, LANGUAGE_COOKIE)
 - Follow ESLint and Prettier configurations
 
 ## Module System
@@ -25,6 +26,8 @@
 - App path aliases: @/* for packages/app/src/*
 - IMPORTANT: Always use static imports for @/utils/directus in server handlers - dynamic imports prevent NITRO_DIRECTUS_URL from being read correctly
 - IMPORTANT: Never use top-level static imports from @tanstack/react-start/server in files reachable from the client route tree. Use dynamic `import('@tanstack/react-start/server')` inside createServerFn handlers instead. TanStack Start's import-protection plugin blocks both direct server imports and *.server.* file patterns from client code.
+- For server-side cookie/header access, use `serverCookies()` from @/utils/cookie (wraps the dynamic import)
+  - Example: `const { getCookie, setCookie, getRequestHeader } = await serverCookies()`
 - For authenticated Directus requests in server functions, use `directusRequest(command, true)` from @/utils/directus
   - Example: `const user = await directusRequest(readMe(), true)`
   - Returns `null` if no token is available
@@ -70,7 +73,8 @@
 - packages/app/src/contents/: Intlayer content files for translations
 - packages/app/src/hooks/: Custom React hooks
 - packages/app/src/utils/: Utility functions (cookie, directus, head)
-  - directus.ts: Directus client (getClient), server functions for auth (isAuthenticated, getCookieToken, setCookieToken) using dynamic server imports
+  - cookie.ts: Cookie constants (LANDING_VISITED_COOKIE, LANGUAGE_COOKIE), serverCookies() helper for server-side cookie/header access, client-side setCookie()
+  - directus.ts: Directus client (getClient), server functions for auth (isAuthenticated, getCookieToken, setCookieToken) using serverCookies()
 - packages/directus/src/index.ts: Directus collections and configuration
 - packages/directus/src/types.ts: TypeScript type definitions
 - packages/directus/src/init.ts: Database migration script
@@ -96,10 +100,13 @@
 
 ## Landing Page Flow
 
-- First-time visitors are redirected to /landing page
-- Landing cookie is set after visiting landing page (expires in 1 year)
-- Returning visitors go directly to home page
-- Cookie management via useCookie hook
+- The `/` route performs a server-side redirect (via beforeLoad + createServerFn) to determine locale and destination
+- Language detection priority: LANGUAGE_COOKIE > Accept-Language header > default locale
+- First-time visitors are redirected to /{locale}/landing
+- Landing cookie (LANDING_VISITED_COOKIE) is set server-side when visiting the landing page (expires in 1 year)
+- Returning visitors go directly to /{locale} home page
+- The /{locale}/ route also checks the landing cookie server-side and redirects to /landing if missing
+- LANGUAGE_COOKIE is set client-side in useI18nHTMLAttributes whenever the locale changes
 
 ## Authentication
 
