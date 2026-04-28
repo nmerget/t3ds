@@ -10,6 +10,12 @@ services:
       NITRO_APP_URL: ${APP_URL}
     labels:
       - 'traefik.http.middlewares.app-compress.compress=true'
+      - 'traefik.http.services.app-svc.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.app.rule=Host(`${APP_HOST}`)'
+      - 'traefik.http.routers.app.entrypoints=websecure'
+      - 'traefik.http.routers.app.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.app.middlewares=app-compress'
+      - 'traefik.http.routers.app.service=app-svc'
     healthcheck:
       test:
         ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
