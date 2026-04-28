@@ -87,6 +87,7 @@ export const init = async () => {
       const directusCompose = await createCompose({
         name: 'directus',
         environmentId,
+        appName: `${projectName}-directus`,
       });
       directusComposeId = directusCompose.composeId;
       console.log(`Directus compose created: ${directusComposeId}`);
@@ -136,6 +137,7 @@ export const init = async () => {
       const appCompose = await createCompose({
         name: 'app',
         environmentId,
+        appName: `${projectName}-app`,
       });
       appComposeId = appCompose.composeId;
       console.log(`App compose created: ${appComposeId}`);
@@ -145,6 +147,8 @@ export const init = async () => {
       `APP_IMAGE=${appImage}:${appTag}`,
       `DIRECTUS_URL=${directusUrl}`,
       `APP_URL=${appUrl}`,
+      `APP_HOST=${new URL(appUrl).hostname}`,
+      `APP_NAME=${projectName}-app`,
     ].join('\n');
 
     console.log('Setting App compose file and environment...');
