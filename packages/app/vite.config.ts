@@ -42,8 +42,12 @@ const config = defineConfig(({ mode }) => {
       }),
       viteReact(),
       VitePWA({
+        buildBase: '/',
+        outDir: '.output/public',
         workbox: {
-          globPatterns: ['**/*'],
+          navigateFallback: null,
+          globPatterns: ['**/*.{js,css,ico,png,svg,webp,woff,woff2}'],
+          globDirectory: '.output/public',
         },
         includeAssets: ['**/*'],
         manifest,
