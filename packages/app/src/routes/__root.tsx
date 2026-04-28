@@ -30,6 +30,7 @@ export const Route = createRootRoute({
       links: [
         ...getHeadLanguages(appUrl, pathname),
         ...HeadIcons,
+        { rel: 'preload', href: appCss, as: 'style' },
         { rel: 'stylesheet', href: appCss },
         {
           rel: 'manifest',
