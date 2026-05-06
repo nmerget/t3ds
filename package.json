@@ -15,7 +15,7 @@
     "test": "pnpm -r test"
   },
   "devDependencies": {
-    "eslint": "10.2.1",
+    "eslint": "10.3.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "5.5.5",
     "mcp-general": "^1.1.0",
