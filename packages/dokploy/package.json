@@ -6,7 +6,7 @@
   "type": "module",
   "main": "./src/init.ts",
   "devDependencies": {
-    "@types/node": "25.6.0",
+    "@types/node": "25.9.1",
     "@typescript-eslint/eslint-plugin": "8.59.3",
     "@typescript-eslint/parser": "8.59.3",
     "eslint": "10.3.0",
