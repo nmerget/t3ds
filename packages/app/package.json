@@ -12,7 +12,7 @@
     "generate:manifest-icons": "pwa-asset-generator public/app-icon.png public/icons --favicon"
   },
   "dependencies": {
-    "@directus/sdk": "21.2.2",
+    "@directus/sdk": "21.3.0",
     "@t3ds/directus": "workspace:*",
     "@tailwindcss/vite": "4.3.0",
     "@tanstack/query-core": "5.100.14",
@@ -27,14 +27,14 @@
     "csstype": "3.2.3",
     "daisyui": "5.5.20",
     "intlayer": "8.12.1",
-    "lucide-react": "1.8.0",
+    "lucide-react": "1.17.0",
     "nitro": "3.0.1-alpha.2",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-intlayer": "8.12.1",
     "tailwindcss": "4.3.0",
-    "workbox-window": "7.4.0",
-    "zod": "4.3.6"
+    "workbox-window": "7.4.1",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "0.7.0",
@@ -50,11 +50,11 @@
     "eslint-plugin-better-tailwindcss": "4.5.0",
     "eslint-plugin-react": "7.37.5",
     "jsdom": "29.1.1",
-    "pwa-asset-generator": "8.1.4",
+    "pwa-asset-generator": "8.1.5",
     "typescript": "6.0.3",
     "vite": "8.0.16",
     "vite-intlayer": "8.12.1",
     "vite-plugin-pwa": "1.3.0",
-    "web-vitals": "5.2.0"
+    "web-vitals": "5.3.0"
   }
 }
