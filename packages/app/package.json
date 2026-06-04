@@ -25,7 +25,7 @@
     "@tanstack/router-core": "1.171.6",
     "@tanstack/router-plugin": "1.168.11",
     "csstype": "3.2.3",
-    "daisyui": "5.5.19",
+    "daisyui": "5.5.20",
     "intlayer": "8.10.1",
     "lucide-react": "1.8.0",
     "nitro": "3.0.1-alpha.2",
