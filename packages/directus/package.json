@@ -12,7 +12,7 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@directus/sdk": "21.3.0"
+    "@directus/sdk": "22.0.0"
   },
   "devDependencies": {
     "@types/node": "26.1.0",
