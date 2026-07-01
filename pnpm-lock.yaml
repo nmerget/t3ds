@@ -66,8 +66,8 @@ importers:
         specifier: 3.2.3
         version: 3.2.3
       daisyui:
-        specifier: 5.5.20
-        version: 5.5.20
+        specifier: 5.6.7
+        version: 5.6.7
       intlayer:
         specifier: 8.12.4
         version: 8.12.4(react@19.2.7)(typescript@6.0.3)(zod@4.4.3)
@@ -2802,8 +2802,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  daisyui@5.5.20:
-    resolution: {integrity: sha512-HemJcjl0Gk9rQ8BcgofN6p+EURrqftQG9wK1Hkxs98i49xe68+QxpNvry+PyxwkIUgrbMpNmZ5ZWjmtffAjfhQ==}
+  daisyui@5.6.7:
+    resolution: {integrity: sha512-FVpuUbesyAUBWNp5pXn9JDF1EWt3IZJzp5Staw1YqfP0MwL36sv3wtmfWeuEBkZcazaQbeZXA91oW5dSB+TUEg==}
 
   data-uri-to-buffer@6.0.2:
     resolution: {integrity: sha512-7hvf7/GW8e86rW0ptuwS3OcBGDjIi6SZva7hCyWC0yYry2cOPmLIjXAUHI6DK2HsnwJd9ifmt57i8eV2n4YNpw==}
@@ -7891,7 +7891,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  daisyui@5.5.20: {}
+  daisyui@5.6.7: {}
 
   data-uri-to-buffer@6.0.2: {}
 
