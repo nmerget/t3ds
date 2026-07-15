@@ -7,9 +7,9 @@
   "main": "./src/init.ts",
   "devDependencies": {
     "@types/node": "26.1.1",
-    "@typescript-eslint/eslint-plugin": "8.62.1",
-    "@typescript-eslint/parser": "8.62.1",
-    "eslint": "10.6.0",
+    "@typescript-eslint/eslint-plugin": "8.64.0",
+    "@typescript-eslint/parser": "8.64.0",
+    "eslint": "10.7.0",
     "tsx": "4.22.4",
     "typescript": "6.0.3",
     "vitest": "4.1.10"
