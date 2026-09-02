@@ -12,15 +12,15 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@directus/sdk": "21.3.0"
+    "@directus/sdk": "25.0.1"
   },
   "devDependencies": {
     "@types/node": "26.2.0",
     "@typescript-eslint/eslint-plugin": "8.68.0",
     "@typescript-eslint/parser": "8.68.0",
     "eslint": "10.9.1",
-    "tsx": "4.22.4",
-    "typescript": "6.0.3",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
     "vitest": "4.1.11"
   },
   "scripts": {
