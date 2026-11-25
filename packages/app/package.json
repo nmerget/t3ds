@@ -12,7 +12,7 @@
     "generate:manifest-icons": "pwa-asset-generator public/app-icon.png public/icons --favicon"
   },
   "dependencies": {
-    "@directus/sdk": "21.3.0",
+    "@directus/sdk": "27.2.0",
     "@t3ds/directus": "workspace:*",
     "@tailwindcss/vite": "4.3.5",
     "@tanstack/query-core": "5.107.1",
@@ -24,17 +24,17 @@
     "@tanstack/react-start": "1.169.5",
     "@tanstack/router-core": "1.171.39",
     "@tanstack/router-plugin": "1.169.0",
-    "csstype": "3.2.3",
+    "csstype": "3.2.4",
     "daisyui": "5.8.2",
     "intlayer": "9.8.0",
-    "lucide-react": "1.17.0",
+    "lucide-react": "1.77.0",
     "nitro": "3.0.1-alpha.2",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-intlayer": "9.8.0",
     "tailwindcss": "4.3.5",
     "workbox-window": "7.4.1",
-    "zod": "4.4.3"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@tanstack/devtools-vite": "0.8.6",
@@ -50,11 +50,11 @@
     "eslint-plugin-better-tailwindcss": "4.11.0",
     "eslint-plugin-react": "7.37.5",
     "jsdom": "31.0.1",
-    "pwa-asset-generator": "8.1.5",
-    "typescript": "6.0.3",
+    "pwa-asset-generator": "8.1.7",
+    "typescript": "7.0.2",
     "vite": "8.3.8",
     "vite-intlayer": "9.8.0",
     "vite-plugin-pwa": "2.0.0",
-    "web-vitals": "5.3.0"
+    "web-vitals": "6.2.3"
   }
 }
